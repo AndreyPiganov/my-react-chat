@@ -8,7 +8,9 @@ const initValidationSchema = (confirmPassword) => yup.object().shape({
 });
 
 function AutheficationForm() {
+  
   const { handleChange, handleSubmit, errors, values } = useFormikContext();
+
   return (
     <Container>
       <Row className='justify-content-center mt-5'>

@@ -1,6 +1,7 @@
 import {Button, Form, Container, Row, Col} from 'react-bootstrap';
 import { Formik, useFormikContext } from 'formik';
 import * as yup from 'yup';
+import axios from 'axios';
 
 const initValidationSchema = (nicknames) => yup.object().shape({
   nickname: yup.string().min(3, 'От 3 до 20 символов').max(20, 'От 3 до 20 символов').test('unique','Пользователь с таким именем уже существует', (value) => !nicknames.includes(value)).required('Имя обязательно к заполнению'),
@@ -17,7 +18,7 @@ function RegistrationForm() {
         <h1 className='text-center'>Регистрация</h1>
     <Form onSubmit={handleSubmit}>
       <Form.Group controlId='nickname' className='form-floating mb-3'>
-      <Form.Control placeholder='Имя Пользователя' type='text' name='nickname' value={values.nickname} onChange={handleChange} required isInvalid={touched.nickname && !!errors.nickname} onBlur={handleBlur} className='form-control'/>
+      <Form.Control placeholder='Имя Пользователя' type='text' name='nickname' value={values.nickname} onChange={handleChange} required isInvalid={touched.nickname && !!errors.nickname} onBlur={handleBlur} className='form-control' autoComplete='Имя'/>
       <Form.Label>Имя пользователя</Form.Label>
       <Form.Control.Feedback type='invalid'>{errors.nickname}</Form.Control.Feedback>
       </Form.Group>
@@ -46,8 +47,13 @@ export default function Registration() {
         initialValues={{nickname: '', password: '', confirmPassword: ''}}
         validationSchema={initValidationSchema(['Andrey','Andro','admin'])}
         validateOnBlur={true}
-        onSubmit={(values, formikBag) => {
+        onSubmit={async (values, formikBag) => {
           alert(`Данные отправились ${values.nickname} ${values.password} ${values.confirmPassword}`);
+          console.log(JSON.stringify(values));
+          const user = await axios.post('http://localhost:8080/api/v1/user',{nickname: values.nickname, password: values.password})
+          console.log(user);
+          console.log(user.data);
+          console.log(user.data.id);
           formikBag.setSubmitting(false);
         }}
       >
