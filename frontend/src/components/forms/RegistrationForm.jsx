@@ -1,44 +1,51 @@
+import {Button, Form, Container, Row, Col} from 'react-bootstrap';
 import { Formik, useFormikContext } from 'formik';
 import * as yup from 'yup';
 
 const initValidationSchema = (nicknames) => yup.object().shape({
-  nickname: yup.string().test('unique','Пользователь с таким именем уже существует', (value) => !nicknames.includes(value)).required('Имя обязательно к заполнению'),
+  nickname: yup.string().min(3, 'От 3 до 20 символов').max(20, 'От 3 до 20 символов').test('unique','Пользователь с таким именем уже существует', (value) => !nicknames.includes(value)).required('Имя обязательно к заполнению'),
   password: yup.string().min(6, 'Пароль должен содержать не менее 6 символов').required('Пароль должен быть заполнен'),
   confirmPassword: yup.string().required('Подтвердите пароль').oneOf([yup.ref('password'),null], 'Пароли должны совпадать')
 });
 
 function RegistrationForm() {
-  const { handleChange, handleSubmit, errors, values } = useFormikContext();
-
+  const { handleChange, handleSubmit, errors, values, handleBlur , touched } = useFormikContext();
   return (
-    <form onSubmit={handleSubmit}>
-      <div>
-        <label>Имя</label>
-        <input type="text" name='nickname' value={values.nickname} onChange={handleChange} />
-        {errors.nickname && <div className='danger'>{errors.nickname}</div>}
-      </div>
-      <div>
-        <label>Пароль</label>
-        <input type="password" name='password' value={values.password} onChange={handleChange} />
-        {errors.password && <div className='danger'>{errors.password}</div>}
-      </div>
-      <div>
-        <label>Подтвердите пароль</label>
-        <input type='password' name="confirmPassword" value={values.confirmPassword} onChange={handleChange}/>
-        {errors.confirmPassword && <div className='danger'>{errors.confirmPassword}</div>}
-      </div>
-      <button type="submit">Зарегистрироваться</button>
-    </form>
+    <Container>
+      <Row className='justify-content-center mt-5'>
+        <Col xs={10} md={6}>
+        <h1 className='text-center'>Регистрация</h1>
+    <Form onSubmit={handleSubmit}>
+      <Form.Group controlId='nickname'>
+      <Form.Label>Имя</Form.Label>
+      <Form.Control placeholder='Имя' type='text' name='nickname' value={values.nickname} onChange={handleChange} required isInvalid={touched.nickname && !!errors.nickname} onBlur={handleBlur}/>
+      <Form.Control.Feedback type='invalid'>{errors.nickname}</Form.Control.Feedback>
+      </Form.Group>
+      <Form.Group controlId='password'>
+        <Form.Label>Пароль</Form.Label>
+        <Form.Control placeholder="Пароль" type="password" name='password' value={values.password} onChange={handleChange} required isInvalid={touched.password && !!errors.password} onBlur={handleBlur}/>
+        <Form.Control.Feedback type='invalid'>{errors.password}</Form.Control.Feedback>
+      </Form.Group>
+      <Form.Group controlId='confirmPassword'>
+        <Form.Label>Подтвердите пароль</Form.Label>
+        <Form.Control placeholder="Подтвердите пароль" type='password' name="confirmPassword" value={values.confirmPassword} onChange={handleChange} required isInvalid={touched.confirmPassword && !!errors.confirmPassword} onBlur={handleBlur}/>
+        <Form.Control.Feedback type='invalid'>{errors.confirmPassword}</Form.Control.Feedback>
+      </Form.Group>
+      <Button type="submit" className='outline-primary'>Зарегистрироваться</Button>
+    </Form>
+    </Col>
+    </Row>
+    </Container>
   );
 }
 
 export default function Registration() {
   return (
     <div>
-      <h1>Регистрация</h1>
       <Formik
-        initialValues={{ nickname: '', password: '' , confirmPassword: ''}}
+        initialValues={{nickname: '', password: '', confirmPassword: ''}}
         validationSchema={initValidationSchema(['Andrey','Andro','admin'])}
+        validateOnBlur={true}
         onSubmit={(values, formikBag) => {
           alert(`Данные отправились ${values.nickname} ${values.password} ${values.confirmPassword}`);
           formikBag.setSubmitting(false);

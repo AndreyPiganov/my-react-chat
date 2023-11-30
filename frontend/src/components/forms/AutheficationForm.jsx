@@ -1,5 +1,6 @@
 import { Formik, useFormikContext } from 'formik';
 import * as yup from 'yup';
+import { Button, Form } from 'react-bootstrap';
 
 const initValidationSchema = (confirmPassword) => yup.object().shape({
   nickname: yup.string().required('Имя обязательно к заполнению'),
@@ -10,17 +11,17 @@ function AutheficationForm() {
   const { handleChange, handleSubmit, errors, values } = useFormikContext();
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className='ju'>
       <div>
-        <label>Имя</label>
-        <input type="text" name='nickname' value={values.nickname} onChange={handleChange} required/>
+        <label htmlFor='nickname'>Имя</label>
+        <input placeholder='Имя' type="text" name='nickname' value={values.nickname} onChange={handleChange} required id='nickname'/>
       </div>
       <div>
-        <label>Пароль</label>
-        <input type="password" name='password' value={values.password} onChange={handleChange} required/>
+        <label htmlFor='password'>Пароль</label>
+        <input placeholder="Пароль" type="password" name='password' value={values.password} onChange={handleChange} required id="password"/>
         {Object.keys(errors).length > 0 && <div className='danger'>Неправильное имя или пароль</div>}
       </div>
-      <button type="submit">Войти</button>
+      <Button type='submit' className='primary'>Войти</Button>
     </form>
   );
 }
