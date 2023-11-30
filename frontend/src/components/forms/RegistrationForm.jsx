@@ -16,19 +16,19 @@ function RegistrationForm() {
         <Col xs={10} md={6}>
         <h1 className='text-center'>Регистрация</h1>
     <Form onSubmit={handleSubmit}>
-      <Form.Group controlId='nickname'>
-      <Form.Label>Имя</Form.Label>
-      <Form.Control placeholder='Имя' type='text' name='nickname' value={values.nickname} onChange={handleChange} required isInvalid={touched.nickname && !!errors.nickname} onBlur={handleBlur}/>
+      <Form.Group controlId='nickname' className='form-floating mb-3'>
+      <Form.Control placeholder='Имя Пользователя' type='text' name='nickname' value={values.nickname} onChange={handleChange} required isInvalid={touched.nickname && !!errors.nickname} onBlur={handleBlur} className='form-control'/>
+      <Form.Label>Имя пользователя</Form.Label>
       <Form.Control.Feedback type='invalid'>{errors.nickname}</Form.Control.Feedback>
       </Form.Group>
-      <Form.Group controlId='password'>
+      <Form.Group controlId='password' className='form-floating mb-3'>
+        <Form.Control placeholder="Пароль" type="password" name='password' value={values.password} onChange={handleChange} required isInvalid={touched.password && !!errors.password} onBlur={handleBlur} className='form-control'/>
         <Form.Label>Пароль</Form.Label>
-        <Form.Control placeholder="Пароль" type="password" name='password' value={values.password} onChange={handleChange} required isInvalid={touched.password && !!errors.password} onBlur={handleBlur}/>
         <Form.Control.Feedback type='invalid'>{errors.password}</Form.Control.Feedback>
       </Form.Group>
-      <Form.Group controlId='confirmPassword'>
+      <Form.Group controlId='confirmPassword' className='form-floating mb-3'>
+        <Form.Control placeholder="Подтвердите пароль" type='password' name="confirmPassword" value={values.confirmPassword} onChange={handleChange} required isInvalid={touched.confirmPassword && !!errors.confirmPassword} onBlur={handleBlur} className='form-control'/>
         <Form.Label>Подтвердите пароль</Form.Label>
-        <Form.Control placeholder="Подтвердите пароль" type='password' name="confirmPassword" value={values.confirmPassword} onChange={handleChange} required isInvalid={touched.confirmPassword && !!errors.confirmPassword} onBlur={handleBlur}/>
         <Form.Control.Feedback type='invalid'>{errors.confirmPassword}</Form.Control.Feedback>
       </Form.Group>
       <Button type="submit" className='outline-primary'>Зарегистрироваться</Button>

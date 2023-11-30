@@ -1,6 +1,6 @@
 import { Formik, useFormikContext } from 'formik';
 import * as yup from 'yup';
-import { Button, Form } from 'react-bootstrap';
+import { Button, Form, Container, Col, Row } from 'react-bootstrap';
 
 const initValidationSchema = (confirmPassword) => yup.object().shape({
   nickname: yup.string().required('Имя обязательно к заполнению'),
@@ -9,27 +9,32 @@ const initValidationSchema = (confirmPassword) => yup.object().shape({
 
 function AutheficationForm() {
   const { handleChange, handleSubmit, errors, values } = useFormikContext();
-
   return (
-    <form onSubmit={handleSubmit} className='ju'>
-      <div>
-        <label htmlFor='nickname'>Имя</label>
-        <input placeholder='Имя' type="text" name='nickname' value={values.nickname} onChange={handleChange} required id='nickname'/>
-      </div>
-      <div>
-        <label htmlFor='password'>Пароль</label>
-        <input placeholder="Пароль" type="password" name='password' value={values.password} onChange={handleChange} required id="password"/>
-        {Object.keys(errors).length > 0 && <div className='danger'>Неправильное имя или пароль</div>}
-      </div>
-      <Button type='submit' className='primary'>Войти</Button>
-    </form>
+    <Container>
+      <Row className='justify-content-center mt-5'>
+        <Col xs={10} md={6}>
+        <h1 className='text-center'>Войти</h1>
+    <Form onSubmit={handleSubmit}>
+      <Form.Group controlId='nickname' className='form-floating mb-3'>
+      <Form.Control placeholder='Ваш ник' type='text' name='nickname' value={values.nickname} onChange={handleChange} required className='form-control'/>
+      <Form.Label>Ваш ник</Form.Label>
+      </Form.Group>
+      <Form.Group controlId='password' className='form-floating mb-3'>
+        <Form.Control placeholder="Пароль" type="password" name='password' value={values.password} onChange={handleChange} required className='form-control'/>
+        <Form.Label>Пароль</Form.Label>
+        <Form.Control.Feedback type='invalid'>{errors.password}</Form.Control.Feedback>
+      </Form.Group>
+      <Button type="submit" className='outline-primary'>Войти</Button>
+    </Form>
+    </Col>
+    </Row>
+    </Container>
   );
 }
 
 export default function Authefication() {
   return (
     <div>
-      <h1>Войти</h1>
       <Formik
         initialValues={{ nickname: '', password: '' }}
         validationSchema={initValidationSchema('qwerty')}
