@@ -1,4 +1,3 @@
-### Hexlet tests and linter status:
-[![Actions Status](https://github.com/AndreyPiganov/frontend-project-12/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/AndreyPiganov/frontend-project-12/actions)
+My react chat
 
 Deploy https://reactchat-aloi.onrender.com
