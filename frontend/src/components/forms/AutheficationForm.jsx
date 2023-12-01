@@ -1,6 +1,7 @@
 import { Formik, useFormikContext } from 'formik';
 import * as yup from 'yup';
 import { Button, Form, Container, Col, Row } from 'react-bootstrap';
+import axios from 'axios';
 
 const initValidationSchema = (confirmPassword) => yup.object().shape({
   nickname: yup.string().required('Имя обязательно к заполнению'),
@@ -22,9 +23,9 @@ function AutheficationForm() {
       <Form.Label>Ваш ник</Form.Label>
       </Form.Group>
       <Form.Group controlId='password' className='form-floating mb-3'>
-        <Form.Control placeholder="Пароль" type="password" name='password' value={values.password} onChange={handleChange} required className='form-control'/>
+        <Form.Control placeholder="Пароль" type="password" name='password' value={values.password} onChange={handleChange} required className='form-control' isInvalid={errors.nickname || errors.password}/>
         <Form.Label>Пароль</Form.Label>
-        <Form.Control.Feedback type='invalid'>{errors.password}</Form.Control.Feedback>
+        <Form.Control.Feedback type='invalid'>Неверное имя пользователя или пароль</Form.Control.Feedback>
       </Form.Group>
       <Button type="submit" className='outline-primary'>Войти</Button>
     </Form>
@@ -41,9 +42,12 @@ export default function Authefication() {
         initialValues={{ nickname: '', password: '' }}
         validationSchema={initValidationSchema('qwerty')}
         validateOnChange={false}
-        onSubmit={(values, formikBag) => {
+        onSubmit={ async (values, formikBag) => {
           alert(`Данные отправились ${values.nickname} ${values.password}`);
           console.log(values);
+          const response = await axios.post('http://localhost:8080/api/v1/login', values);
+          console.log(response.data);
+          localStorage.setItem('user', JSON.stringify(response.data));
           formikBag.setSubmitting(false);
         }}
       >

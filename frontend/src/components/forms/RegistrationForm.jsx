@@ -51,9 +51,6 @@ export default function Registration() {
           alert(`Данные отправились ${values.nickname} ${values.password} ${values.confirmPassword}`);
           console.log(JSON.stringify(values));
           const user = await axios.post('http://localhost:8080/api/v1/user',{nickname: values.nickname, password: values.password})
-          console.log(user);
-          console.log(user.data);
-          console.log(user.data.id);
           formikBag.setSubmitting(false);
         }}
       >

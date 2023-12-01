@@ -1,6 +1,6 @@
 import {BrowserRouter, Routes, Route} from 'react-router-dom';
-import MainPage from './components/MainPage';
-import NotFound from './components/NotFound';
+import MainPage from './components/pages/MainPage.jsx';
+import NotFound from './components/pages/ErrorPage.jsx';
 import Authefication from './components/forms/AutheficationForm';
 import Registration from './components/forms/RegistrationForm';
 import routes from './routes.js';
