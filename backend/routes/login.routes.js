@@ -5,6 +5,6 @@ const loginController = new LoginController();
 
 const loginRouter = new Router();
 
-loginRouter.post('/v1/login', loginController.logIn)
+loginRouter.post('/v1/signin', loginController.signIn)
 
 export default loginRouter;

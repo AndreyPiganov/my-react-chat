@@ -2,7 +2,7 @@ import pool from '../src/db.js';
 import jwt from 'jsonwebtoken';
 
 export default class AutheficationController{
-    async logIn(req,res){
+    async signIn(req,res){
         const {nickname, password} = req.body;
         const users = await pool.query(`SELECT * FROM users`);
         const user = users.rows.find((item) => item.nickname === nickname && item.password === password);
@@ -14,5 +14,3 @@ export default class AutheficationController{
         }
     }
 }
-
-const test = {}

@@ -10,7 +10,7 @@ function App() {
     <BrowserRouter>
     <Routes>
       <Route path={routes.root} element={<MainPage/>}/>
-      <Route path={routes.login} element={<Authefication/>}/>
+      <Route path={routes.signin} element={<Authefication/>}/>
       <Route path={routes.signup} element={<Registration/>}></Route>
       <Route path={routes.others} element={<NotFound/>}/>
     </Routes>
