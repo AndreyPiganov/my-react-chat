@@ -1,10 +1,12 @@
+import {useNavigate} from 'react-router-dom';
+import React, {useState} from 'react';
 import {Button, Form, Container, Row, Col} from 'react-bootstrap';
 import { Formik, useFormikContext } from 'formik';
 import * as yup from 'yup';
 import axios from 'axios';
 
-const initValidationSchema = (nicknames) => yup.object().shape({
-  nickname: yup.string().min(3, 'От 3 до 20 символов').max(20, 'От 3 до 20 символов').test('unique','Пользователь с таким именем уже существует', (value) => !nicknames.includes(value)).required('Имя обязательно к заполнению'),
+const initValidationSchema = () => yup.object().shape({
+  nickname: yup.string().min(3, 'От 3 до 20 символов').max(20, 'От 3 до 20 символов').required('Имя обязательно к заполнению'),
   password: yup.string().min(6, 'Пароль должен содержать не менее 6 символов').required('Пароль должен быть заполнен'),
   confirmPassword: yup.string().required('Подтвердите пароль').oneOf([yup.ref('password'),null], 'Пароли должны совпадать')
 });
@@ -41,17 +43,27 @@ function RegistrationForm() {
 }
 
 export default function Registration() {
+  const [validateState, setValidateState] = useState(true);
+  const navigate = useNavigate();
   return (
     <div>
       <Formik
         initialValues={{nickname: '', password: '', confirmPassword: ''}}
-        validationSchema={initValidationSchema(['Andrey','Andro','admin'])}
-        validateOnBlur={true}
+        validationSchema={initValidationSchema()}
+        validateOnBlur={validateState}
+        validateOnChange={validateState}
         onSubmit={async (values, formikBag) => {
-          alert(`Данные отправились ${values.nickname} ${values.password} ${values.confirmPassword}`);
-          console.log(JSON.stringify(values));
-          const user = await axios.post('http://localhost:8080/api/v1/user',{nickname: values.nickname, password: values.password})
-          formikBag.setSubmitting(false);
+          try{
+          const response = await axios.post('http://localhost:8080/api/v1/registration',{nickname: values.nickname, password: values.password})
+          setValidateState(true);
+          localStorage.setItem('user', JSON.stringify(response.data));
+          navigate('/')
+        }catch(error){
+          console.log(error);
+            formikBag.setErrors({nickname: error.response.data.message});
+            setValidateState(false);
+        }
+        formikBag.setSubmitting(false);
         }}
       >
         <RegistrationForm />

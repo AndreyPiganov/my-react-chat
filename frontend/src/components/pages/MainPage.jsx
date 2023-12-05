@@ -1,5 +1,8 @@
+import NavigateBar from './../NavigateBar';
+
 export default function MainPage() {
     return (    <div className="App">
-    Hello world
+      <NavigateBar/>
+    <div>Hello world</div>
   </div>);
 }
