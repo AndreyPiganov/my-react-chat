@@ -1,13 +1,8 @@
 import { Formik, useFormikContext } from 'formik';
-import * as yup from 'yup';
 import { Button, Form, Container, Col, Row } from 'react-bootstrap';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-
-const initValidationSchema = () => yup.object().shape({
-  nickname: yup.string().required('Имя обязательно к заполнению'),
-  password: yup.string().required('Пароль должен быть заполнен'),
-});
+import Validator from '../../validations/Validator.js';
 
 function AutheficationForm() {
   
@@ -37,12 +32,13 @@ function AutheficationForm() {
 }
 
 export default function Authefication() {
+  const validator = new Validator();
   const navigate = useNavigate();
   return (
     <div>
       <Formik
         initialValues={{ nickname: '', password: '' }}
-        validationSchema={initValidationSchema()}
+        validationSchema={validator.authefication()}
         validateOnChange={false}
         onSubmit={ async (values, formikBag) => {
           try{

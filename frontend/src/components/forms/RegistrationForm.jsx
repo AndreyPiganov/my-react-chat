@@ -2,14 +2,9 @@ import {useNavigate} from 'react-router-dom';
 import React, {useState} from 'react';
 import {Button, Form, Container, Row, Col} from 'react-bootstrap';
 import { Formik, useFormikContext } from 'formik';
-import * as yup from 'yup';
 import axios from 'axios';
+import Validator from '../../validations/Validator.js';
 
-const initValidationSchema = () => yup.object().shape({
-  nickname: yup.string().min(3, 'От 3 до 20 символов').max(20, 'От 3 до 20 символов').required('Имя обязательно к заполнению'),
-  password: yup.string().min(6, 'Пароль должен содержать не менее 6 символов').required('Пароль должен быть заполнен'),
-  confirmPassword: yup.string().required('Подтвердите пароль').oneOf([yup.ref('password'),null], 'Пароли должны совпадать')
-});
 
 function RegistrationForm() {
   const { handleChange, handleSubmit, errors, values, handleBlur , touched } = useFormikContext();
@@ -45,11 +40,12 @@ function RegistrationForm() {
 export default function Registration() {
   const [validateState, setValidateState] = useState(true);
   const navigate = useNavigate();
+  const validator = new Validator();
   return (
     <div>
       <Formik
         initialValues={{nickname: '', password: '', confirmPassword: ''}}
-        validationSchema={initValidationSchema()}
+        validationSchema={validator.registration()}
         validateOnBlur={validateState}
         validateOnChange={validateState}
         onSubmit={async (values, formikBag) => {
