@@ -1,11 +1,8 @@
 import pool from '../db.js';
-import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 import ApiError from '../error/ApiError.js';
+import generateJwt from '../utils/generateJwt.js';
 
-const generateJwt = (id,nickname,role) =>{
-    return jwt.sign({id, nickname,role}, process.env.SECRET_KEY, {expiresIn: '24h'})
-}
 class UserController{
     async createUser(req,res){
         const {nickname, password} = req.body;
@@ -57,6 +54,10 @@ class UserController{
     } catch(error){
         next(ApiError.badRequest('Пользователь с таким именем уже существует'));
     }
+    }
+    async check(req,res,next) {
+        const token = generateJwt(req.user.id,req.user.nickname,req.user.role);
+        return res.json({token});
     }
     // async logout(req,res){
 
