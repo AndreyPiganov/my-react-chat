@@ -1,9 +1,9 @@
 import {BrowserRouter, Routes, Route} from 'react-router-dom';
-import MainPage from './components/pages/MainPage.jsx';
-import NotFound from './components/pages/ErrorPage.jsx';
-import Authefication from './components/forms/AutheficationForm';
-import Registration from './components/forms/RegistrationForm';
-import routes from './routes.js';
+import MainPage from './pages/MainPage.jsx';
+import NotFound from './pages/ErrorPage.jsx';
+import Authefication from './forms/AutheficationForm.jsx';
+import Registration from './forms/RegistrationForm.jsx';
+import routes from '../routes.js';
 
 function App() {
   return (
