@@ -1,4 +1,4 @@
-import {Button, Form, Container, Row, Col} from 'react-bootstrap';
+import {Button, Form} from 'react-bootstrap';
 import React, {useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import { useFormik } from 'formik';
@@ -23,11 +23,8 @@ function RegistrationForm() {
   formikBag.setSubmitting(false);
   }});
   return (
-    <Container>
-      <Row className='justify-content-center mt-5'>
-        <Col xs={10} md={6}>
-        <h1 className='text-center'>Регистрация</h1>
-    <Form onSubmit={formik.handleSubmit}>
+    <Form onSubmit={formik.handleSubmit} className='w-50'>
+    <h1 className='text-center mb-4'>Регистрация</h1>
       <Form.Group controlId='nickname' className='form-floating mb-3'>
       <Form.Control placeholder='Имя Пользователя' type='text' name='nickname' value={formik.values.nickname} onChange={formik.handleChange} required isInvalid={formik.touched.nickname && !!formik.errors.nickname} onBlur={formik.handleBlur} className='form-control' autoComplete='Имя'/>
       <Form.Label>Имя пользователя</Form.Label>
@@ -43,11 +40,8 @@ function RegistrationForm() {
         <Form.Label>Подтвердите пароль</Form.Label>
         <Form.Control.Feedback type='invalid'>{formik.errors.confirmPassword}</Form.Control.Feedback>
       </Form.Group>
-      <Button type="submit" className='outline-primary'>Зарегистрироваться</Button>
+      <Button type="submit" variant='outline-primary mb-3 w-100'>Зарегистрироваться</Button>
     </Form>
-    </Col>
-    </Row>
-    </Container>
   );
 }
 
