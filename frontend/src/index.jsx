@@ -4,6 +4,7 @@ import App from './components/App.jsx';
 import {Provider} from 'react-redux';
 import store from './store/store.js';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import reportWebVitals from './reportWebVitals.js';
 
 const app = async () => {
   const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -17,3 +18,4 @@ const app = async () => {
 };
 
 app();
+reportWebVitals();
