@@ -18,7 +18,7 @@ function RegistrationForm() {
       try{
         const response = await registration(values.nickname, values.password);
         setValidateState(true);
-        localStorage.setItem('user', JSON.stringify(response.data));
+        localStorage.setItem('token', JSON.stringify(response.data));
         navigate('/')
       }catch(error){
         formikBag.setErrors({nickname: error.response.data.message});
@@ -27,7 +27,7 @@ function RegistrationForm() {
       formikBag.setSubmitting(false);
     }});
   return (
-    <Form onSubmit={handleSubmit} className='w-50'>
+    <Form onSubmit={handleSubmit} className='mt-3 mt-mb-0'>
     <h1 className='text-center mb-4'>Регистрация</h1>
       <Form.Group controlId='nickname' className='form-floating mb-3'>
       <Form.Control placeholder='Имя Пользователя' type='text' name='nickname' value={values.nickname} onChange={handleChange} required isInvalid={touched.nickname && !!errors.nickname} onBlur={handleBlur} className='form-control' autoComplete='Имя'/>
@@ -39,7 +39,7 @@ function RegistrationForm() {
         <Form.Label>Пароль</Form.Label>
         <Form.Control.Feedback type='invalid'>{errors.password}</Form.Control.Feedback>
       </Form.Group>
-      <Form.Group controlId='confirmPassword' className='form-floating mb-3'>
+      <Form.Group controlId='confirmPassword' className='form-floating mb-4'>
         <Form.Control placeholder="Подтвердите пароль" type='password' name="confirmPassword" value={values.confirmPassword} onChange={handleChange} required isInvalid={touched.confirmPassword && !!errors.confirmPassword} onBlur={handleBlur} className='form-control'/>
         <Form.Label>Подтвердите пароль</Form.Label>
         <Form.Control.Feedback type='invalid'>{errors.confirmPassword}</Form.Control.Feedback>

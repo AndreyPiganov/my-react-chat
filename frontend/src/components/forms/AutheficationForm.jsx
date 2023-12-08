@@ -6,13 +6,13 @@ import Validator from '../../validations/Validator.js';
 
 function AutheficationForm() {
   const navigate = useNavigate();
-  const validateSchema = Validator.authefication();
+  const validateSchema = Validator.login();
   const {handleChange, handleSubmit, errors, values} = useFormik({
     ...validateSchema,
     onSubmit: async (values, formikBag) => {
       try{
         const response = await login(values.nickname, values.password);
-        localStorage.setItem('user', JSON.stringify(response.data));
+        localStorage.setItem('token', JSON.stringify(response.data));
         navigate('/');
       }catch(error){
         formikBag.setErrors({nickname: ' ',password: error.response.data.message});

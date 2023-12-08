@@ -3,9 +3,9 @@ import authSchema from './authSchema.js';
 
 export default class Validator {
     static registration(){
-        return registrationSchema();
+        return registrationSchema;
     }
-    static authefication(){
-        return authSchema();
+    static login(){
+        return authSchema;
     }
 }
