@@ -2,10 +2,10 @@ import registrationSchema from './registrationSchema.js';
 import authSchema from './authSchema.js';
 
 export default class Validator {
-    registration(){
+    static registration(){
         return registrationSchema();
     }
-    authefication(){
+    static authefication(){
         return authSchema();
     }
 }

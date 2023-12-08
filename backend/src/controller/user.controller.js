@@ -33,12 +33,12 @@ class UserController{
         const users = await pool.query(`SELECT * FROM users`);
         const user = users.rows.find((item) => item.nickname === nickname);
         if(!user){
-            next(ApiError.badRequest('Пользователь не найден'));
+            next(ApiError.badRequest('Неверное имя пользователя или пароль'));
             return
         }
         let comparePassword = bcrypt.compareSync(password, user.password);
         if(!comparePassword){
-            next(ApiError.internal('Указан неверный пароль'));
+            next(ApiError.internal('Неверное имя пользователя или пароль'));
             return;
         }
         const token = generateJwt(user.id, user.nickname,user.role);
