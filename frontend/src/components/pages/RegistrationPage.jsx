@@ -1,11 +1,9 @@
 import RegistrationForm from '../forms/RegistrationForm.jsx';
-import NavigateBar from '../NavigateBar.jsx';
 import { Container,Card,Row, Col, Image } from 'react-bootstrap';
 
 export default function RegistrationPage() {
   return (
   <div className='d-flex flex-column h-100'>
-    <NavigateBar/>
   <Container fluid className='h-100'>
       <Row className='justify-content-center mt-5 align-content-center h-100'>
       <Col xs={12} md={8} xxl={6}>
@@ -21,7 +19,7 @@ export default function RegistrationPage() {
           <Card.Footer className='p4'>
             <div className='text-center'>
             <span>Есть аккаунт? </span>
-            <a href='/signin'>Войти</a>
+            <a href='/login'>Войти</a>
             </div>
             </Card.Footer>
       </Card>

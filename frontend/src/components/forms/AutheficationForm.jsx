@@ -3,16 +3,19 @@ import { Button, Form} from 'react-bootstrap';
 import {login} from '../../http/userAPI.js';
 import { useNavigate } from 'react-router-dom';
 import Validator from '../../validations/Validator.js';
+import { userLogin } from '../../store/slices/userSlice.js';
+import {useDispatch} from 'react-redux';
 
 function AutheficationForm() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const validateSchema = Validator.login();
   const {handleChange, handleSubmit, errors, values} = useFormik({
     ...validateSchema,
     onSubmit: async (values, formikBag) => {
       try{
         const response = await login(values.nickname, values.password);
-        localStorage.setItem('token', JSON.stringify(response.data));
+        dispatch(userLogin(response));
         navigate('/');
       }catch(error){
         formikBag.setErrors({nickname: ' ',password: error.response.data.message});

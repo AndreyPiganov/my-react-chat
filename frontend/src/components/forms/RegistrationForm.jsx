@@ -4,9 +4,11 @@ import {useNavigate} from 'react-router-dom';
 import { useFormik } from 'formik';
 import Validator from '../../validations/Validator.js';
 import { registration } from '../../http/userAPI.js';
-
+import {userLogin, logout} from '../../store/slices/userSlice.js';
+import {useDispatch} from 'react-redux';
 
 function RegistrationForm() {
+  const dispatch = useDispatch();
   const [validateState, setValidateState] = useState(true);
   const navigate = useNavigate();
   const schema = Validator.registration();
@@ -18,7 +20,7 @@ function RegistrationForm() {
       try{
         const response = await registration(values.nickname, values.password);
         setValidateState(true);
-        localStorage.setItem('token', JSON.stringify(response.data));
+        dispatch(userLogin(response));
         navigate('/')
       }catch(error){
         formikBag.setErrors({nickname: error.response.data.message});

@@ -1,12 +1,10 @@
 import AutheficationForm from '../forms/AutheficationForm.jsx';
-import NavigateBar from '../NavigateBar.jsx';
 import { Container,Card,Row, Col, Image } from 'react-bootstrap';
 
 
 export default function AutheficationPage() {
     return (
     <div className='d-flex flex-column h-100'>
-      <NavigateBar/>
     <Container fluid className='h-100'>
         <Row className='justify-content-center mt-5 align-content-center h-100'>
         <Col xs={12} md={8} xxl={6}>
