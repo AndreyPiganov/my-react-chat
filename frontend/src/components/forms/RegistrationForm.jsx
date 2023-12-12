@@ -4,7 +4,7 @@ import {useNavigate} from 'react-router-dom';
 import { useFormik } from 'formik';
 import Validator from '../../validations/Validator.js';
 import { registration } from '../../http/userAPI.js';
-import {userLogin, logout} from '../../store/slices/userSlice.js';
+import {userLogin} from '../../store/slices/userSlice.js';
 import {useDispatch} from 'react-redux';
 
 function RegistrationForm() {
