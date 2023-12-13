@@ -59,6 +59,10 @@ class UserController{
         const token = generateJwt(req.user.id,req.user.nickname,req.user.role);
         return res.json({token});
     }
+    async sendMessage(req,res,next) {
+        
+        return
+    }
     // async logout(req,res){
 
     // }

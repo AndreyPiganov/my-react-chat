@@ -1,11 +1,12 @@
-import React, {useState} from 'react';
 import { useFormik } from 'formik';
 import { Form} from 'react-bootstrap';
+import io from 'socket.io-client';
 
 const ChatForm = () =>{
-    const {handleChange, values} = useFormik({initialValues: {message: ''}})
-    const [buttonState, setButtonState] = useState({active: !values.message.length > 0});
-    const {active} = buttonState;
+    const {handleChange, values} = useFormik({initialValues: {message: ''},onSubmit: async(values,formikBag) =>{
+        const socket = io(process.env.REACT_APP_API_URL);
+        socket.emit('sendMessage', values.message)
+    }})
     return (<Form id="chat" className='py-0 border-0 rounded-2'>
         <Form.Group controlId='message' className='input-group'>
             <Form.Control placeholder='Введите сообщение' name='message' type='text' value={values.message} className='py-3 border' onChange={handleChange}></Form.Control>
