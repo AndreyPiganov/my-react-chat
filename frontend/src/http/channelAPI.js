@@ -5,6 +5,7 @@ export const fetchChannels = async () =>{
     return data;
 }
 
-export const addChannel = async () =>{
-    const {data} = await $host.post('api/v1/channel', )
+export const addChannel = async (name,user_id) =>{
+    const {data} = await $host.post('api/v1/channel', {name,user_id});
+    return data;
 }
